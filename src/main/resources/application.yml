@@ -1,1 +1,2 @@
-
+rocketmq:
+  name-server: 172.20.111.110:9876
