@@ -8,6 +8,7 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -32,6 +33,16 @@ public class ConsumerSimple {
         // 从头消费
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         consumer.subscribe("topic_1", "tag_2");
+        /**
+         * 在 Broadcasting 模式下，同 ConsumerGroup 里的每个 Consumer
+         * 能消费到所订阅 Topic 的全部消息，也就是一个消息会被多次分发
+         *
+         * Clustering 模式下，同 ConsumerGroup ( GroupN ame 相同 里的
+         * Consumer 只消费所订阅消 一部分 容， 同一个 ConsumerGroup
+         * 所有的 Consumer 的内 容合 来才是所订阅 Topic
+         * 从而达到负载均衡的目的
+         */
+        consumer.setMessageModel(MessageModel.CLUSTERING);
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
