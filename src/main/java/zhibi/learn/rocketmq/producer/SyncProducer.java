@@ -27,12 +27,12 @@ public class SyncProducer {
          * Producer 发送
          */
         DefaultMQProducer producer = new DefaultMQProducer("group_1");
-        producer.setNamesrvAddr("172.20.111.110:9876");
+        producer.setNamesrvAddr("127.0.0.1:9876");
         // 启动生产者
         producer.start();
         // 发送消息
-        for (int i = 0; i < 100; i++) {
-            Message    message    = new Message("topic_1", "tag_2", ("消息" + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
+        for (int i = 0; i < 1; i++) {
+            Message    message    = new Message("topic_6", "*", ("消息" + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
             SendResult sendResult = producer.send(message);
             log.info("发送消息  {}", sendResult);
         }

@@ -2,6 +2,7 @@ package zhibi.learn.rocketmq.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Component;
@@ -14,10 +15,10 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 @Slf4j
-@RocketMQMessageListener(consumerGroup = "group_2", topic = "topic_2")
+@RocketMQMessageListener(consumerGroup = "group_1", topic = "topic_2",selectorExpression = "tag_1",messageModel= MessageModel.BROADCASTING)
 public class SimpleConsumerListener2 implements RocketMQListener<MessageExt> {
     @Override
     public void onMessage(MessageExt message) {
-        log.info("tag_2  接受到消息：  {}  -- {}  -- {}", message.getTopic(), message.getTags(), new String(message.getBody(), StandardCharsets.UTF_8));
+        log.info("  接受到消息：  {}  -- {}  -- {}", message.getTopic(), message.getTags(), new String(message.getBody(), StandardCharsets.UTF_8));
     }
 }

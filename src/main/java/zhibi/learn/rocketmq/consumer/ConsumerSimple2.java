@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2019/6/20 15:48
  */
 @Slf4j
-public class ConsumerSimple {
+public class ConsumerSimple2 {
 
     public static void main(String[] args) throws MQClientException {
         /**
@@ -32,7 +32,7 @@ public class ConsumerSimple {
         consumer.setNamesrvAddr("127.0.0.1:9876");
         // 从头消费
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
-        consumer.subscribe("topic_6", "*");
+        consumer.subscribe("topic_5", "*");
         /**
          * 在 Broadcasting 模式下，同 ConsumerGroup 里的每个 Consumer
          * 能消费到所订阅 Topic 的全部消息，也就是一个消息会被多次分发
@@ -43,7 +43,7 @@ public class ConsumerSimple {
          * 从而达到负载均衡的目的
          */
         consumer.setMessageModel(MessageModel.CLUSTERING);
-        consumer.setInstanceName("2");
+        consumer.setInstanceName("1");
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
