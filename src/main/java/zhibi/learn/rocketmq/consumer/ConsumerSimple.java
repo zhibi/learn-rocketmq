@@ -28,7 +28,7 @@ public class ConsumerSimple {
          * NameServer 地址后启动，然后 把待发送的消息拼装成 Message 对象，使
          * Producer 发送
          */
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("group_1");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("group_999");
         consumer.setNamesrvAddr("127.0.0.1:9876");
         // 从头消费
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
