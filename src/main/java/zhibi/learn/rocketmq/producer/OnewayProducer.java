@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.apache.rocketmq.remoting.exception.RemotingException;
@@ -12,13 +11,13 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 import java.io.UnsupportedEncodingException;
 
 /**
- * sync 方式发送
+ * 单向 方式发送
  *
  * @author 执笔
  * @date 2019/6/20 14:59
  */
 @Slf4j
-public class SyncProducer {
+public class OnewayProducer {
 
     public static void main(String[] args) throws MQClientException, UnsupportedEncodingException, RemotingException, InterruptedException, MQBrokerException {
         /**
@@ -37,10 +36,10 @@ public class SyncProducer {
         producer.start();
         // 发送消息
         for (int i = 0; i < 1; i++) {
-            Message    message    = new Message("topic_6", "*", ("消息" + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
-            // 同步返回结果
-            SendResult sendResult = producer.send(message);
-            log.info("发送消息  {}", sendResult);
+            Message message = new Message("topic_6", "*", ("消息" + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
+            // 单向 方式发送
+            producer.sendOneway(message);
+            log.info("发送消息  {}", message);
         }
         // 关闭生产者
         producer.shutdown();
